@@ -1,9 +1,9 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :find_user, except: [:create]
   respond_to :json
 
   def show
-    user = User.find_by(id: params[:id])
-    render json: user, status: 200
+    render json: @user, status: 200
   end
 
   def create
@@ -14,10 +14,9 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def update
-    user = User.find_by(id: params[:id])
-    return render json: { errors: user.errors }, status: 422 unless
-      user.update_attributes(user_params)
-    render json: user, status: 200
+    return render json: { errors: @user.errors }, status: 422 unless
+      @user.update_attributes(user_params)
+    render json: @user, status: 200
   end
 
   private
@@ -28,5 +27,9 @@ class Api::V1::UsersController < ApplicationController
                                  :email,
                                  :password,
                                  :password_confirmation)
+  end
+
+  def find_user
+    @user = User.find_by(id: params[:id])
   end
 end
