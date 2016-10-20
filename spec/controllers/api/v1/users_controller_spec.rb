@@ -6,7 +6,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     before { get :show, id: user.id }
 
     it 'returns the details of a user' do
-      user_response = JSON.parse(response.body, symbolize_names: true)
+      user_response = json_response
       expect(user_response[:first_name]).to eq user.first_name
       expect(user_response[:last_name]).to eq user.last_name
       expect(user_response[:email]).to eq user.email
@@ -29,7 +29,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it 'renders a json response containing user details' do
-        user_response = JSON.parse(response.body, symbolize_names: true)
+        user_response = json_response
         expect(user_response[:first_name]).to eq user_attributes[:first_name]
         expect(user_response[:last_name]).to eq user_attributes[:last_name]
         expect(user_response[:email]).to eq user_attributes[:email]
@@ -51,7 +51,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it 'renders a json response containing errors' do
-        user_response = JSON.parse(response.body, symbolize_names: true)
+        user_response = json_response
         expect(user_response[:errors]).to be_present
       end
 
@@ -73,7 +73,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it 'has a json response containing the updated user\'s info' do
-        user_response = JSON.parse(response.body, symbolize_names: true)
+        user_response = json_response
         expect(user_response[:email]).to eq 'new@example.com'
       end
 
@@ -86,7 +86,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       before { patch :update, id: user.id, user: { email: 'anything.com' } }
 
       it 'has a json response contaning errors' do
-        user_response = JSON.parse(response.body, symbolize_names: true)
+        user_response = json_response
         expect(user_response[:errors]).to be_present
       end
 
@@ -94,5 +94,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         expect(response.status).to eq 422
       end
     end
+  end
+
+  describe 'DELETE #destroy' do
   end
 end
