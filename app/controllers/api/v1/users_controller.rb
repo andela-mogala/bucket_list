@@ -8,11 +8,8 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if user.save
-      render json: user, status: 201
-    else
-      render json: { errors: user.errors }, status: 401
-    end
+    return render json: { errors: user.errors }, status: 401 unless user.save
+    render json: user, status: 201
   end
 
   private
