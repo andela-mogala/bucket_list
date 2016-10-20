@@ -97,5 +97,16 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    let!(:user) { FactoryGirl.create :user }
+    let!(:initial_user_count) { User.count }
+    before { delete :destroy, id: user.id }
+
+    it 'deletes the user' do
+      expect(User.count).to eq initial_user_count - 1
+    end
+
+    it 'has a response indicating resource has been deleted' do
+      expect(response.status).to eq 204
+    end
   end
 end

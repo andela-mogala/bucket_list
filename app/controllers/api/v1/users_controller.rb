@@ -19,6 +19,11 @@ class Api::V1::UsersController < ApplicationController
     render json: @user, status: 200
   end
 
+  def destroy
+    @user.destroy
+    head 204
+  end
+
   private
 
   def user_params
