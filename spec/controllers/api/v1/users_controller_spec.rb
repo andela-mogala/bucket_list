@@ -56,7 +56,42 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it 'has a response code indicating failure' do
-        expect(response.status).to eq 401
+        expect(response.status).to eq 422
+      end
+    end
+  end
+
+  describe 'PUT/PATCH #update' do
+    let(:user) { FactoryGirl.create :user }
+
+    context 'with valid params' do
+      before do
+        user.email = 'new@example.com'
+        patch :update, id: user.id, user: { email: 'new@example.com',
+                                            password: user.password
+                                          }
+      end
+
+      it 'has a json response containing the updated user\'s info' do
+        user_response = JSON.parse(response.body, symbolize_names: true)
+        expect(user_response[:email]).to eq 'new@example.com'
+      end
+
+      it 'has a response code indicating success' do
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'with invalid params' do
+      before { patch :update, id: user.id, user: { email: 'anything.com' } }
+
+      it 'has a json response contaning errors' do
+        user_response = JSON.parse(response.body, symbolize_names: true)
+        expect(user_response[:errors]).to be_present
+      end
+
+      it 'has a response code indacting failure' do
+        expect(response.status).to eq 422
       end
     end
   end
