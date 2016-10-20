@@ -22,11 +22,6 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sabisu_rails', github: "IcaliaLabs/sabisu-rails"
-gem 'compass-rails', '~> 2.0.2'
-gem 'furatto'
-gem 'font-awesome-rails'
-gem 'simple_form'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem "codeclimate-test-reporter", group: :test, require: nil
 

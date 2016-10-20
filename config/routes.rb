@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  mount SabisuRails::Engine => "/sabisu_rails"
 
   namespace :api, defaults: { format: :json } do
     namespace :v1, defaults: { format: :json } do
