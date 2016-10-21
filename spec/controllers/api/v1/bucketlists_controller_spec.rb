@@ -55,4 +55,18 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
       expect(response.status).to eq 200
     end
   end
+
+  describe 'GET #show' do
+    let(:bucketlist) { create :bucketlist }
+    before { get :show, id: bucketlist.id }
+
+    it 'returns a bucketlist' do
+      bucketlist_response = json_response
+      expect(bucketlist_response[:name]).to eq bucketlist.name
+    end
+
+    it 'returns a success status code' do
+      expect(response.status).to eq 200
+    end
+  end
 end

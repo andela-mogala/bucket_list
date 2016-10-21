@@ -15,6 +15,11 @@ module Api
         render json: { bucketlists: Bucketlist.all }, status: 200
       end
 
+      def show
+        bucketlist = Bucketlist.find_by(id: params[:id])
+        render json: bucketlist, status: 200
+      end
+
       private
 
       def bucketlist_params

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :show, :update, :destroy] do
         resources :bucketlists, only: [:create]
       end
-      resources :bucketlists, only: [:index]
+      resources :bucketlists, only: [:index, :show]
     end
   end
 end
