@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
                     uniqueness: true
   validates :password, length: { minimum: 8 },
                        confirmation: true
+
+  has_many :bucketlists
 end
