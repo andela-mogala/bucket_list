@@ -20,6 +20,14 @@ module Api
         render json: bucketlist, status: 200
       end
 
+      def update
+        user = User.find_by(id: params[:user_id])
+        bucketlist = user.bucketlists.find_by(id: params[:id])
+        return render json: { errors: bucketlist.errors }, status: 422 unless
+          bucketlist.update_attributes(bucketlist_params)
+        render json: bucketlist, status: 200
+      end
+
       private
 
       def bucketlist_params

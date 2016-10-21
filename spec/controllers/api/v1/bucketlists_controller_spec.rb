@@ -69,4 +69,50 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
       expect(response.status).to eq 200
     end
   end
+
+  describe 'PUT/PATCH update' do
+    let(:user) { create :user }
+    let(:bucketlist) { create :bucketlist, user: user }
+
+    context 'with valid params' do
+      before do
+        patch :update, user_id: user.id, id: bucketlist.id,
+              bucketlist: { name: 'Something Nice' }
+      end
+
+      it 'updates the bucketlist' do
+        expect(bucketlist.reload.name).to eq 'Something Nice'
+      end
+
+      it 'returns json response of updated bucketlist' do
+        expect(json_response[:name]).to eq 'Something Nice'
+      end
+
+      it 'has a success response status' do
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'with invalid params' do
+      before do
+        patch :update, user_id: user.id, id: bucketlist.id,
+              bucketlist: { name: nil }
+      end
+
+      it 'does not update' do
+        expect(bucketlist.reload.name).to_not be_nil
+      end
+
+      it 'returns a json error response' do
+        expect(json_response[:errors]).to be_present
+      end
+
+      it 'has response status indicating failure' do
+        expect(response.status).to eq 422
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+  end
 end
