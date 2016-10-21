@@ -17,4 +17,20 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of :password }
     it { is_expected.to validate_confirmation_of :password }
   end
+
+  describe 'associations' do
+    it { should have_many :bucketlists }
+  end
+
+  describe 'bucketlist dependence' do
+    let(:user) { create :user }
+    let(:bucketlist) { create :bucketlist, user: user }
+
+    context 'when user is deleted' do
+      before { user.destroy }
+      it 'deletes related bucketlist' do
+        expect(user.bucketlists.first).to be_nil
+      end
+    end
+  end
 end
