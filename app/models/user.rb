@@ -7,5 +7,5 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 8 },
                        confirmation: true
 
-  has_many :bucketlists
+  has_many :bucketlists, dependent: :destroy
 end
