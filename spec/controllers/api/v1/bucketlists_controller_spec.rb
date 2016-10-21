@@ -114,5 +114,17 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    let!(:user) { create :user }
+    let!(:bucketlist) { create :bucketlist, user: user }
+
+    before { delete :destroy, user_id: user.id, id: bucketlist.id }
+
+    it 'removes the bucketlist from the database' do
+      expect(Bucketlist.find_by(id: bucketlist.id)).to be_nil
+    end
+
+    it 'returns a response status indicating success' do
+      expect(response.status).to eq 204
+    end
   end
 end

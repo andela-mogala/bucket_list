@@ -28,6 +28,13 @@ module Api
         render json: bucketlist, status: 200
       end
 
+      def destroy
+        user = User.find_by(id: params[:user_id])
+        bucketlist = user.bucketlists.find_by(id: params[:id])
+        bucketlist.destroy
+        head 204
+      end
+
       private
 
       def bucketlist_params
