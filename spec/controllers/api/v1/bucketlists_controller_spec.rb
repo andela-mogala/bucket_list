@@ -101,6 +101,7 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
 
       it 'does not update' do
         expect(bucketlist.reload.name).to_not be_nil
+        expect(bucketlist.reload.name).to eq bucketlist.name
       end
 
       it 'returns a json error response' do
