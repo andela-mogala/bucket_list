@@ -1,6 +1,7 @@
 module Api
   module V1
     class Api::V1::ItemsController < ApplicationController
+      before_action :authenticate_user!
       before_action :find_bucketlist, only: [:create, :index]
       before_action :find_item, only: [:show, :update, :destroy]
       respond_to :json

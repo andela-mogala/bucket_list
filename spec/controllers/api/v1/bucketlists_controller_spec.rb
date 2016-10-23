@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::BucketlistsController, type: :controller do
+  let(:user) { create :user }
+  before { sign_in user }
   describe 'POST #create' do
-    let(:user) { create :user }
     let(:bucketlist_attr){ attributes_for :bucketlist, user: user }
     let!(:initial_bucketlist_count) { Bucketlist.count }
 
@@ -43,7 +44,7 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
   end
 
   describe 'GET #index' do
-    let!(:bucketlists) { create_list :bucketlist, 20 }
+    let!(:bucketlists) { create_list :bucketlist, 20, user: user }
     before { get :index }
 
     it 'returns all bucketlists' do
@@ -57,7 +58,7 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:bucketlist) { create :bucketlist }
+    let(:bucketlist) { create :bucketlist, user: user }
     before { get :show, id: bucketlist.id }
 
     it 'returns a bucketlist' do
