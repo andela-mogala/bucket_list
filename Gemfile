@@ -15,6 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'jwt'
 gem "codeclimate-test-reporter", group: :test, require: nil
 gem 'bcrypt', '~> 3.1.7'
+gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
   gem 'byebug'
