@@ -1,5 +1,6 @@
 class Api::V1::AuthController < ApplicationController
   respond_to :json
+  before_action :authenticate_user!, only: [:logout]
 
   def login
     user = User.find_by(email: params[:email])
