@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::ItemsController, type: :controller do
   let(:user) { create :user }
   let(:bucketlist) { create :bucketlist, user: user }
+  before { sign_in user }
 
   describe 'POST #create' do
     let(:item_attr) { attributes_for :item, bucketlist: bucketlist }
@@ -10,7 +11,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
     context 'with valid params' do
       before do
-        post :create, user_id: user.id, bucketlist_id: bucketlist.id,
+        post :create, bucketlist_id: bucketlist.id,
              item: item_attr
       end
 
@@ -30,7 +31,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
     context 'with invalid params' do
       before do
-        post :create , user_id: user.id, bucketlist_id: bucketlist.id,
+        post :create, bucketlist_id: bucketlist.id,
              item: { name: nil }
       end
       it 'does not create an item' do
@@ -50,7 +51,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
   describe 'GET #index' do
     let(:items) { create_list :item, 20, bucketlist: bucketlist }
 
-    before { get :index, bucketlist_id: bucketlist.id, user_id: user.id }
+    before { get :index, bucketlist_id: bucketlist.id }
 
     it 'returns all items in a bucket list' do
       expect(json_response[:items].size).to eq bucketlist.items.size
@@ -65,7 +66,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     let(:item) { create :item, bucketlist: bucketlist }
 
     before do
-      get :show, bucketlist_id: bucketlist.id, user_id: user.id, id: item.id
+      get :show, bucketlist_id: bucketlist.id, id: item.id
     end
 
     it 'returns a single item in the bucket list' do
@@ -82,7 +83,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
     context 'with valid parameters' do
       before do
-        patch :update, user_id: user.id, bucketlist_id: bucketlist.id,
+        patch :update, bucketlist_id: bucketlist.id,
               id: item.id, item: { name: 'Build an api service' }
       end
 
@@ -101,7 +102,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
     context 'with invalid parameters' do
       before do
-        patch :update, user_id: user.id, bucketlist_id: bucketlist.id,
+        patch :update, bucketlist_id: bucketlist.id,
               id: item.id, item: { name: nil }
       end
 
@@ -122,8 +123,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
   describe 'DELETE #destroy' do
     let(:item) { create :item, bucketlist: bucketlist }
     before do
-      delete :destroy, id: item.id, bucketlist_id: bucketlist.id,
-             user_id: user.id
+      delete :destroy, id: item.id, bucketlist_id: bucketlist.id
     end
 
     it 'deletes the item from the bucketlist' do

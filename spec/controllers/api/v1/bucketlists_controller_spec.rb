@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::BucketlistsController, type: :controller do
   let(:user) { create :user }
   before { sign_in user }
+
   describe 'POST #create' do
     let(:bucketlist_attr){ attributes_for :bucketlist, user: user }
     let!(:initial_bucketlist_count) { Bucketlist.count }

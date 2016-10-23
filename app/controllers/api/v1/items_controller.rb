@@ -38,7 +38,7 @@ module Api
         params.require(:item).permit(:name,
                                      :done,
                                      :bucketlist_id,
-                                     :user_id)
+                                     :id)
       end
 
       def find_item
@@ -46,8 +46,8 @@ module Api
       end
 
       def find_bucketlist
-        user = User.find_by(id: params[:user_id])
-        @bucketlist = user.bucketlists.find_by(id: params[:bucketlist_id])
+        @bucketlist = current_user.bucketlists.
+          find_by(id: params[:bucketlist_id])
       end
     end
   end
