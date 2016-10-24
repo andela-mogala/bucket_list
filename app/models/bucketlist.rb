@@ -6,4 +6,6 @@ class Bucketlist < ActiveRecord::Base
   scope :filter_by_name, ->(keyword) do
     where('lower(name) LIKE ?', "%#{keyword.downcase}%")
   end
+
+  scope :recently_added, -> { order('created_at') }
 end

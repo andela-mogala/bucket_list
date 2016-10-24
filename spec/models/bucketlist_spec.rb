@@ -18,12 +18,19 @@ RSpec.describe Bucketlist, type: :model do
   end
 
   describe 'class methods' do
-    describe '.filter_by_name' do
-      let!(:bucketlist1) { create :bucketlist, name: 'Build a robot' }
-      let!(:bucketlist2) { create :bucketlist, name: 'Take over the world' }
+    let!(:bucketlist1) { create :bucketlist, name: 'Build a robot' }
+    let!(:bucketlist2) { create :bucketlist, name: 'Take over the world' }
 
+    describe '.filter_by_name' do
       it 'returns a matching bucketlist collection' do
         expect(Bucketlist.filter_by_name('build')).to match_array [bucketlist1]
+      end
+    end
+
+    describe '.recently_added' do
+      it 'returns a collection ordered by last created' do
+        expect(Bucketlist.recently_added).to match_array(
+                                              [bucketlist2, bucketlist1])
       end
     end
   end
