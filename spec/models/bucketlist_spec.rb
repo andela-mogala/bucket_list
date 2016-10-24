@@ -38,7 +38,7 @@ RSpec.describe Bucketlist, type: :model do
       let!(:bucketlist3) { create :bucketlist, name: 'Build a drone' }
 
       context 'with names parameter' do
-        search_params = { name: 'build' }
+        search_params = { q: 'build' }
         it 'should return collection ordered by creation time' do
           expect(Bucketlist.search(search_params)).to match_array(
                                                         [

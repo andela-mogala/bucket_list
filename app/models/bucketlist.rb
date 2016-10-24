@@ -9,7 +9,7 @@ class Bucketlist < ActiveRecord::Base
   scope :recently_added, -> { order(:created_at) }
 
   def self.search(params = {})
-    return Bucketlist.all unless params[:name].present?
-    Bucketlist.filter_by_name(params[:name]).recently_added
+    return Bucketlist.all unless params[:q].present?
+    Bucketlist.filter_by_name(params[:q]).recently_added
   end
 end
