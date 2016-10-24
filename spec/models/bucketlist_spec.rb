@@ -16,4 +16,37 @@ RSpec.describe Bucketlist, type: :model do
     it { should belong_to :user }
     it { should have_many :items }
   end
+
+  describe 'class methods' do
+    let!(:bucketlist1) { create :bucketlist, name: 'Build a robot' }
+    let!(:bucketlist2) { create :bucketlist, name: 'Take over the world' }
+
+    describe '.filter_by_name' do
+      it 'returns a matching bucketlist collection' do
+        expect(Bucketlist.filter_by_name('build')).to match_array [bucketlist1]
+      end
+    end
+
+    describe '.recently_added' do
+      it 'returns a collection ordered by last created' do
+        expect(Bucketlist.recently_added).to match_array(
+                                              [bucketlist2, bucketlist1])
+      end
+    end
+
+    describe '.search' do
+      let!(:bucketlist3) { create :bucketlist, name: 'Build a drone' }
+
+      context 'with names parameter' do
+        search_params = { q: 'build' }
+        it 'should return collection ordered by creation time' do
+          expect(Bucketlist.search(search_params)).to match_array(
+                                                        [
+                                                          bucketlist3,
+                                                          bucketlist1
+                                                        ])
+        end
+      end
+    end
+  end
 end
