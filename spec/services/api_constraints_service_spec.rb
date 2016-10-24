@@ -9,23 +9,21 @@ RSpec.describe ApiConstraintsService, type: :service do
   describe 'instance methods' do
     describe '#matches?' do
       context 'when version is included in header' do
-        before do
-          request = double(host: ENV['BASE_URL'],
-                           headers: {'Accept' => 'application/vnd.mybucket.v1'})
+        let(:request) do
+          double(host: ENV['BASE_URL'],
+                 headers: {'Accept' => 'application/vnd.mybucket.v1'})
         end
 
         it 'returns true' do
-          expect(api_constraints_v1.matches?(request)).to be_true
+          expect(api_constraints_v1.matches?(request)).to be true
         end
       end
 
       context 'when default option is specified' do
-        before do
-          request = double(host: ENV['BASE_URL'])
-        end
+        let(:request) { double(host: ENV['BASE_URL']) }
 
         it 'returns true' do
-          expect(api_constraints_v2.matches?(request)).to be_true
+          expect(api_constraints_v2.matches?(request)).to be true
         end
       end
     end
