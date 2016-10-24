@@ -7,9 +7,15 @@ class Bucketlist < ActiveRecord::Base
     where('lower(name) LIKE ?', "%#{keyword.downcase}%")
   end
   scope :recently_added, -> { order(:created_at) }
+  scope :paginate, ->(page, limit = 20) do
+    offset((page.to_i - 1) * limit.to_i).
+      limit(limit.to_i)
+  end
 
   def self.search(params = {})
-    return Bucketlist.all unless params[:q].present?
-    Bucketlist.filter_by_name(params[:q]).recently_added
+    bucketlists = Bucketlist.filter_by_name(params[:q]) if params[:q].present?
+    bucketlists = Bucketlist.paginate(params[:page], params[:limit]) if
+      params[:page].present? && params[:limit].present?
+    bucketlists ||= Bucketlist.all
   end
 end

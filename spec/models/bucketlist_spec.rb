@@ -48,5 +48,17 @@ RSpec.describe Bucketlist, type: :model do
         end
       end
     end
+
+    describe '.paginate' do
+      before { Bucketlist.destroy_all }
+      let(:bucketlists) { create_list :bucketlist, 10 }
+      let(:page) { 2 }
+      let(:limit) { 2 }
+
+      it 'returns a strict bucketlist collection based on provided params' do
+        expect(Bucketlist.paginate(page, limit)).to match_array(
+          [bucketlists.third, bucketlists.fourth])
+      end
+    end
   end
 end
