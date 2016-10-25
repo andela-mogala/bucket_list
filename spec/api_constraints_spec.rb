@@ -19,13 +19,13 @@ RSpec.describe ApiConstraints do
         end
       end
 
-      # context 'when default option is specified' do
-      #   let(:request) { double(host: ENV['BASE_URL']) }
+      context 'when default option is specified' do
+        let(:request) { double(host: ENV['BASE_URL']) }
 
-      #   it 'returns true' do
-      #     expect(api_constraints_v2.matches?(request)).to be true
-      #   end
-      # end
+        it 'returns true' do
+          expect(api_constraints_v2.matches?(request)).to be true
+        end
+      end
     end
   end
 end
