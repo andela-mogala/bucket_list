@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021152122) do
+ActiveRecord::Schema.define(version: 20161025101420) do
+
+  create_table "authentication_data", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "token"
+    t.datetime "issued_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "authentication_data", ["issued_at"], name: "index_authentication_data_on_issued_at"
+  add_index "authentication_data", ["user_id"], name: "index_authentication_data_on_user_id"
 
   create_table "bucketlists", force: :cascade do |t|
     t.string   "name"
