@@ -4,6 +4,8 @@ module Authentication
   end
 
   def get_token(user)
-    token = JsonWebToken.encode({user_id: user.id})
+    token = JsonWebToken.encode({user_id: user.id,
+                                 issued_at: Time.now,
+                                 expires_at: 2.hours.from_now})
   end
 end

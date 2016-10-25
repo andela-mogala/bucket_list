@@ -14,9 +14,11 @@ RSpec.describe Api::V1::AuthController, type: :controller do
     end
 
     context 'with invalid params' do
-    end
-  end
+      before { post :login, email: user.email }
 
-  describe 'GET #logout' do
+      it 'returns an error message' do
+        expect(json_response[:errors]).to eq ['Invalid email/password']
+      end
+    end
   end
 end

@@ -7,8 +7,10 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     return render json: { errors: ['Not Authorized'] },
       status: :unauthorized unless user_id_in_token?
+    return render json: { errors: ['Session Expired'] } if
+      session_expired?
     @current_user = User.find(auth_token[:user_id])
-  rescue JWT::VerificationError, JWT::DecodeError
+    rescue JWT::VerificationError, JWT::DecodeError
     render json: { errors: ['Not Authorized'] }, status: :unauthorized
   end
 
@@ -25,5 +27,10 @@ class ApplicationController < ActionController::Base
 
   def user_id_in_token?
     http_token && auth_token && auth_token[:user_id].to_i
+  end
+
+  def session_expired?
+    (auth_token[:expires_at].to_datetime -
+      auth_token[:issued_at].to_datetime) <= 0
   end
 end
