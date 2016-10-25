@@ -12,7 +12,7 @@ git clone git@github.com:andela-mogala/bucket_list.git
 ```
 and for https,
 ```
-git clonehttps://github.com/andela-mogala/bucket_list.git
+git clone https://github.com/andela-mogala/bucket_list.git
 ```
 from your terminal. This should copy the repo to your local machine.
 
