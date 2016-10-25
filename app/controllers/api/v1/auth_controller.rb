@@ -9,15 +9,16 @@ class Api::V1::AuthController < ApplicationController
     render json: payload(user)
   end
 
-  def logout
-  end
-
   private
 
   def payload(user)
     return nil unless user && user.id
     {
-      auth_token: JsonWebToken.encode({user_id: user.id}),
+      auth_token: JsonWebToken.encode({
+                                        user_id: user.id,
+                                        issued_at: Time.now,
+                                        expires_at: 2.hours.from_now
+                                        }),
       user: { id: user.id, email: user.email }
     }
   end
