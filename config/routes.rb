@@ -1,7 +1,10 @@
+require 'api_constraints'
+
 Rails.application.routes.draw do
 
-  namespace :api, defaults: { format: :json } do
-    namespace :v1, defaults: { format: :json } do
+  scope module: :api, defaults: { format: :json } do
+    scope module: :v1 do
+      constraints ApiConstraints.new(version: 1, default: true) do
       scope controller: :auth do
         post 'auth/login' => :login
       end
@@ -11,4 +14,5 @@ Rails.application.routes.draw do
       end
     end
   end
+end
 end
