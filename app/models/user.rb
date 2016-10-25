@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
                        confirmation: true
 
   has_many :bucketlists, dependent: :destroy
+  has_one :auth, class_name: 'AuthenticationDatum'
 end
