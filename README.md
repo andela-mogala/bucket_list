@@ -5,15 +5,16 @@ A Rails API that provides a bucket list service
 Its really easy. Following the next few steps should get you up and running in no time.
 
 ###Step 1: Clone the repo
-Start by copying the ```https``` or ```ssh``` links for the repo then run 
+Start by copying the ```https``` or ```ssh``` links for the repo then run
+for ssh
 ```
 git clone git@github.com:andela-mogala/bucket_list.git
 ```
-for ssh and 
+and for https,
 ```
 git clonehttps://github.com/andela-mogala/bucket_list.git
 ```
-for https, from your terminal. This should copy the repo to your local machine.
+from your terminal. This should copy the repo to your local machine.
 
 ###Step 2: Install dependencies
 Simply running
@@ -29,7 +30,7 @@ rails s
 The server is responsible for receving requests and serving you a response, so its only logicall to have this running.
 To view the results of queries made to the api, you would need a tool like [cURL](https://curl.haxx.se/download.html) or [POSTMAN](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en)(POSTMAN is a chrome extension). You can snoop around internet for quick tutorials on how to use these tools. I will however show you an example of how to construct a request in cURL. But before then ...
 
-###Step 4:Sign Up
+###Step 4: Sign Up
 Typically, items belong to individual bucketlists and a bucketlist belongs to a user. This means that you can not create a bucketlist without signing up. So you need to visit [http://localhost:3000/signup](http://localhost:3000/signup) to sign up and register your data as a user on the app. Once you have done this, you are now ready to make requests.
 
 ###Step 5: Log In
