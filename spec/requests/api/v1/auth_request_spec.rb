@@ -14,11 +14,22 @@ RSpec.describe 'Authentication requests', type: :request do
       end
     end
 
-    context 'with invalid params' do
+    context 'with incomplete params' do
       before { post auth_login_path, email: user.email }
 
       it 'returns an error message' do
         expect(json_response[:errors]).to eq ['Invalid email/password']
+      end
+    end
+
+    context 'with invalid auth_token' do
+      before do
+        header['Authorization'] = 'sadhjbdasbjhabsjhba'
+        get auth_logout_path, {}, header
+      end
+
+      it 'returns \'Not Authorized' do
+        expect(json_response[:errors]).to eq ['Not Authorized']
       end
     end
   end
