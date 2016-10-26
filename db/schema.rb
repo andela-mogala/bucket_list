@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025101420) do
+ActiveRecord::Schema.define(version: 20161025215611) do
 
   create_table "authentication_data", force: :cascade do |t|
     t.integer  "user_id"
@@ -51,8 +51,10 @@ ActiveRecord::Schema.define(version: 20161025101420) do
     t.string   "password_digest"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.text     "auth_token"
   end
 
+  add_index "users", ["auth_token"], name: "index_users_on_auth_token"
   add_index "users", ["email"], name: "index_users_on_email"
 
 end
