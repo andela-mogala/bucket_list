@@ -1,6 +1,6 @@
 
 class UsersController < ApplicationController
-  before_action :find_user, except: [:create]
+  before_action :find_user, except: [:create, :new]
 
   def show
   end
