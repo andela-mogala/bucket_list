@@ -8,7 +8,11 @@ class User < ActiveRecord::Base
                        confirmation: true
 
   has_many :bucketlists, dependent: :destroy
-  before_create :generate_token!
+  after_create :generate_token_and_update
+
+  def generate_token_and_update
+    update_attribute(:auth_token, generate_token!)
+  end
 
   def generate_token!
     self.auth_token = JsonWebToken.encode({

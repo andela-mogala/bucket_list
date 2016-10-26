@@ -21,4 +21,8 @@ RSpec.describe Api::V1::AuthController, type: :controller do
       end
     end
   end
+
+  describe 'GET #logout' do
+    pending '#logout'
+  end
 end
