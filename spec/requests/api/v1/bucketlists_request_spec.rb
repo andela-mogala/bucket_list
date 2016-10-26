@@ -74,7 +74,7 @@ RSpec.describe 'Bucketlist requests', type: :request do
     end
   end
 
-  describe 'PUT/PATCH update' do
+  describe 'PUT/PATCH /bucketlists/:id' do
     let(:user) { create :user }
     let(:bucketlist) { create :bucketlist, user: user }
 
@@ -116,7 +116,7 @@ RSpec.describe 'Bucketlist requests', type: :request do
     end
   end
 
-  describe 'DELETE #destroy' do
+  describe 'DELETE /bucketlists/:id' do
     let!(:user) { create :user }
     let!(:bucketlist) { create :bucketlist, user: user }
 
