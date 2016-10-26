@@ -14,3 +14,8 @@
  *= require_self
  */
 @import "materialize";
+
+#error_explanation {
+  margin: 5px;
+  background-color: rgba(200, 50, 50, .3);
+}
