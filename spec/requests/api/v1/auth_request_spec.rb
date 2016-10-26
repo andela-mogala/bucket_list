@@ -1,12 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::AuthController, type: :controller do
+RSpec.describe 'Authentication requests', type: :request do
   let!(:user) { create :user }
+  let!(:header) { { authorization: user.auth_token } }
 
-  describe 'POST #login' do
+  describe 'POST /auth/login' do
 
     context 'with valid params' do
-      before { post :login, email: user.email, password: user.password }
+      before { post auth_login_path, email: user.email, password: user.password }
 
       it 'returns a response containing an authentication token' do
         expect(json_response[:auth_token]).to be_present
@@ -14,7 +15,7 @@ RSpec.describe Api::V1::AuthController, type: :controller do
     end
 
     context 'with invalid params' do
-      before { post :login, email: user.email }
+      before { post auth_login_path, email: user.email }
 
       it 'returns an error message' do
         expect(json_response[:errors]).to eq ['Invalid email/password']
@@ -22,11 +23,10 @@ RSpec.describe Api::V1::AuthController, type: :controller do
     end
   end
 
-  describe 'GET #logout' do
+  describe 'GET /auth/logout' do
     context 'when signed in' do
       before do
-        sign_in user
-        get :logout
+        get auth_logout_path, {}, header
       end
 
       it 'has a message indicating logout success' do
