@@ -5,12 +5,12 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
   before { sign_in user }
 
   describe 'POST #create' do
-    let(:bucketlist_attr){ attributes_for :bucketlist, user: user }
+    let(:bucketlist){ build :bucketlist, user: user }
     let!(:initial_bucketlist_count) { Bucketlist.count }
 
     context 'with valid params' do
 
-      before { post :create, user_id: user.id, bucketlist: bucketlist_attr }
+      before { post :create, user_id: user.id, name:  bucketlist.name }
 
       it 'persists bucketlist to database' do
         expect(Bucketlist.count).to eq initial_bucketlist_count + 1
@@ -18,7 +18,7 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
 
       it 'returns a json response containing the recently created object' do
         bucketlist_response = json_response
-        expect(bucketlist_response[:name]).to eq bucketlist_attr[:name]
+        expect(bucketlist_response[:name]).to eq bucketlist.name
       end
 
       it 'has a response status indicating success' do
@@ -27,7 +27,7 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
     end
 
     context 'with invalid params' do
-      before { post :create, user_id: user.id, bucketlist: { name: nil } }
+      before { post :create, user_id: user.id, name: nil }
 
       it 'does not persist to the databse' do
         expect(Bucketlist.count).to eq initial_bucketlist_count
@@ -79,7 +79,7 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
     context 'with valid params' do
       before do
         patch :update, user_id: user.id, id: bucketlist.id,
-              bucketlist: { name: 'Something Nice' }
+              name: 'Something Nice'
       end
 
       it 'updates the bucketlist' do
@@ -98,7 +98,7 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
     context 'with invalid params' do
       before do
         patch :update, user_id: user.id, id: bucketlist.id,
-              bucketlist: { name: nil }
+              name: nil
       end
 
       it 'does not update' do
