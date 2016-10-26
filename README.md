@@ -1,8 +1,4 @@
-[![Code Climate](https://codeclimate.com/github/andela-mogala/bucket_list/badges/gpa.svg)](https://codeclimate.com/github/andela-mogala/bucket_list)
-
-[![Test Coverage](https://codeclimate.com/github/andela-mogala/bucket_list/badges/coverage.svg)](https://codeclimate.com/github/andela-mogala/bucket_list/coverage)
-
-[![Build Status](https://travis-ci.org/andela-mogala/bucket_list.svg?branch=master)](https://travis-ci.org/andela-mogala/bucket_list)
+[![Code Climate](https://codeclimate.com/github/andela-mogala/bucket_list/badges/gpa.svg)](https://codeclimate.com/github/andela-mogala/bucket_list) [![Test Coverage](https://codeclimate.com/github/andela-mogala/bucket_list/badges/coverage.svg)](https://codeclimate.com/github/andela-mogala/bucket_list/coverage) [![Build Status](https://travis-ci.org/andela-mogala/bucket_list.svg?branch=master)](https://travis-ci.org/andela-mogala/bucket_list)
 
 # Bucketlist
 A Rails API that provides a bucket list service
