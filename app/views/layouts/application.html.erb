@@ -5,10 +5,14 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link rel='stylesheet' href=''/>
 </head>
 <body>
-
+<header>
+  <%= render 'layouts/nav' %>
+</header>
 <%= yield %>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/js/mdb.min.js'></script>
 </body>
 </html>
