@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::ItemsController, type: :controller do
+RSpec.describe 'Items Endpoints', type: :request do
   let(:user) { create :user }
   let(:bucketlist) { create :bucketlist, user: user }
-  before { sign_in user }
+  let(:header) { { authorization: user.auth_token } }
 
-  describe 'POST #create' do
+  describe 'POST /bucketlists/:id/items' do
     let(:item) { build :item, bucketlist: bucketlist }
     let!(:initial_item_count) { Item.count }
 
     context 'with valid params' do
       before do
-        post :create, bucketlist_id: bucketlist.id,
-             name: item.name
+        post "/bucketlists/#{bucketlist.id}/items", { name: item.name },
+                                                    header
       end
 
       it 'creates an item' do
@@ -30,8 +30,8 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
     context 'with invalid params' do
       before do
-        post :create, bucketlist_id: bucketlist.id,
-             item: { name: nil }
+        post "/bucketlists/#{bucketlist.id}/items", { name: nil },
+                                                    header
       end
       it 'does not create an item' do
         expect(Item.count).to eq initial_item_count
@@ -47,10 +47,10 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     end
   end
 
-  describe 'GET #index' do
+  describe 'GET /bucketlists/:id/items' do
     let(:items) { create_list :item, 20, bucketlist: bucketlist }
 
-    before { get :index, bucketlist_id: bucketlist.id }
+    before { get "/bucketlists/#{bucketlist.id}/items", {}, header }
 
     it 'returns all items in a bucket list' do
       expect(json_response[:items].size).to eq bucketlist.items.size
@@ -61,11 +61,11 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
+  describe 'GET /bucketlists/:id/items/:item_id' do
     let(:item) { create :item, bucketlist: bucketlist }
 
     before do
-      get :show, bucketlist_id: bucketlist.id, id: item.id
+      get "/bucketlists/#{bucketlist.id}/items/#{item.id}", {}, header
     end
 
     it 'returns a single item in the bucket list' do
@@ -77,13 +77,13 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     end
   end
 
-  describe 'PUT/PATCH #update' do
+  describe 'PUT/PATCH /bucketlists/:id/items/:item_id' do
     let(:item) { create :item, bucketlist: bucketlist }
 
     context 'with valid parameters' do
       before do
-        patch :update, bucketlist_id: bucketlist.id,
-              id: item.id, name: 'Build an api service'
+        patch "/bucketlists/#{bucketlist.id}/items/#{item.id}",
+              { name: 'Build an api service' }, header
       end
 
       it 'successfully updates the item' do
@@ -101,8 +101,8 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
     context 'with invalid parameters' do
       before do
-        patch :update, bucketlist_id: bucketlist.id,
-              id: item.id, name: nil
+        patch "/bucketlists/#{bucketlist.id}/items/#{item.id}",
+              { name: nil }, header
       end
 
       it 'fails to update the item' do
@@ -119,10 +119,10 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     end
   end
 
-  describe 'DELETE #destroy' do
+  describe 'DELETE /bucketlists/:id/items/:item_id' do
     let(:item) { create :item, bucketlist: bucketlist }
     before do
-      delete :destroy, id: item.id, bucketlist_id: bucketlist.id
+      delete "/bucketlists/#{bucketlist.id}/items/#{item.id}", {}, header
     end
 
     it 'deletes the item from the bucketlist' do

@@ -33,7 +33,9 @@ RSpec.configure do |config|
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
   config.include Request::JsonHelpers, type: :controller
+  config.include Request::JsonHelpers, type: :request
   config.include Authentication, type: :controller
+  config.include Authentication, type: :request
   config.include FactoryGirl::Syntax::Methods
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

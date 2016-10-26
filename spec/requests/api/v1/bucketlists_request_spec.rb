@@ -1,24 +1,26 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::BucketlistsController, type: :controller do
-  let(:user) { create :user }
-  before { sign_in user }
+RSpec.describe 'Bucketlist requests', type: :request do
+  let!(:user) { create :user }
+  let(:header) { { authorization: user.auth_token } }
 
-  describe 'POST #create' do
+  describe 'POST /bucketlists' do
     let(:bucketlist){ build :bucketlist, user: user }
     let!(:initial_bucketlist_count) { Bucketlist.count }
 
     context 'with valid params' do
 
-      before { post :create, user_id: user.id, name:  bucketlist.name }
+      before do
+        post '/bucketlists', { user_id: user.id,
+                             name:  bucketlist.name } , header
+      end
 
       it 'persists bucketlist to database' do
         expect(Bucketlist.count).to eq initial_bucketlist_count + 1
       end
 
       it 'returns a json response containing the recently created object' do
-        bucketlist_response = json_response
-        expect(bucketlist_response[:name]).to eq bucketlist.name
+        expect(json_response[:name]).to eq bucketlist.name
       end
 
       it 'has a response status indicating success' do
@@ -27,15 +29,17 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
     end
 
     context 'with invalid params' do
-      before { post :create, user_id: user.id, name: nil }
+      before do
+        post '/bucketlists', { user_id: user.id,
+                               name: nil }, header
+      end
 
       it 'does not persist to the databse' do
         expect(Bucketlist.count).to eq initial_bucketlist_count
       end
 
       it 'returns an error json' do
-        bucketlist_response = json_response
-        expect(bucketlist_response[:errors]).to be_present
+        expect(json_response[:errors]).to be_present
       end
 
       it 'has a response status indicating failure' do
@@ -44,13 +48,12 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
     end
   end
 
-  describe 'GET #index' do
+  describe 'GET /bucketlists' do
     let!(:bucketlists) { create_list :bucketlist, 20, user: user }
-    before { get :index }
+    before { get '/bucketlists', {}, header }
 
     it 'returns all bucketlists' do
-      bucketlist_response = json_response
-      expect(bucketlist_response[:bucketlists].size).to eq bucketlists.size
+      expect(json_response[:bucketlists].size).to eq bucketlists.size
     end
 
     it 'return a success status code' do
@@ -58,13 +61,12 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
+  describe 'GET /bucketlists/:id' do
     let(:bucketlist) { create :bucketlist, user: user }
-    before { get :show, id: bucketlist.id }
+    before { get "/bucketlists/#{bucketlist.id}", {}, header }
 
     it 'returns a bucketlist' do
-      bucketlist_response = json_response
-      expect(bucketlist_response[:name]).to eq bucketlist.name
+      expect(json_response[:name]).to eq bucketlist.name
     end
 
     it 'returns a success status code' do
@@ -72,14 +74,13 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
     end
   end
 
-  describe 'PUT/PATCH update' do
+  describe 'PUT/PATCH /bucketlists/:id' do
     let(:user) { create :user }
     let(:bucketlist) { create :bucketlist, user: user }
 
     context 'with valid params' do
       before do
-        patch :update, user_id: user.id, id: bucketlist.id,
-              name: 'Something Nice'
+        patch "/bucketlists/#{bucketlist.id}", { name: 'Something Nice' }, header
       end
 
       it 'updates the bucketlist' do
@@ -97,8 +98,7 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
 
     context 'with invalid params' do
       before do
-        patch :update, user_id: user.id, id: bucketlist.id,
-              name: nil
+        patch "/bucketlists/#{bucketlist.id}", { name: nil }, header
       end
 
       it 'does not update' do
@@ -116,11 +116,11 @@ RSpec.describe Api::V1::BucketlistsController, type: :controller do
     end
   end
 
-  describe 'DELETE #destroy' do
+  describe 'DELETE /bucketlists/:id' do
     let!(:user) { create :user }
     let!(:bucketlist) { create :bucketlist, user: user }
 
-    before { delete :destroy, user_id: user.id, id: bucketlist.id }
+    before { delete "/bucketlists/#{bucketlist.id}", {}, header }
 
     it 'removes the bucketlist from the database' do
       expect(Bucketlist.find_by(id: bucketlist.id)).to be_nil
