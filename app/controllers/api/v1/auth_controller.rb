@@ -1,25 +1,23 @@
 class Api::V1::AuthController < ApplicationController
   respond_to :json
   before_action :authenticate_user!, only: [:logout]
+  before_action :find_user
 
   def login
-    user = User.find_by(email: params[:email])
     return render json: { errors: ['Invalid email/password'] } unless
-      user.authenticate(params[:password])
-    render json: payload(user)
+      @user.authenticate(params[:password])
+    @user.generate_token_and_update
+    render json: { auth_token: @user.auth_token }
+  end
+
+  def logout
+    current_user.generate_token_and_update
+    render json: { message: 'You have been logged out' }
   end
 
   private
 
-  def payload(user)
-    return nil unless user && user.id
-    {
-      auth_token: JsonWebToken.encode({
-                                        user_id: user.id,
-                                        issued_at: Time.now,
-                                        expires_at: 2.hours.from_now
-                                        }),
-      user: { id: user.id, email: user.email }
-    }
+  def find_user
+    @user = User.find_by(email: params[:email])
   end
 end
