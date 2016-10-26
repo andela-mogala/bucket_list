@@ -72,7 +72,8 @@ Authentication is done by adding your auth token to the Authorization header.
 This app uses some third party gems like:
 * [jwt](https://github.com/jwt/ruby-jwt) for token authentication
 * [active_model_serializers](https://github.com/rails-api/active_model_serializers) for formatting JSON responses
-* [bcrypt](https://github.com/codahale/bcrypt-ruby) for user authentication
+* [bcrypt](https://github.com/codahale/bcrypt-ruby) for user authentication.
+
 Other gems can be viewed in the [gemfile](https://github.com/andela-mogala/bucket_list/blob/master/Gemfile)
 
 ##RUNNING THE TESTS
