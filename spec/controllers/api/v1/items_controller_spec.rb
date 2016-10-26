@@ -6,13 +6,13 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
   before { sign_in user }
 
   describe 'POST #create' do
-    let(:item_attr) { attributes_for :item, bucketlist: bucketlist }
+    let(:item) { build :item, bucketlist: bucketlist }
     let!(:initial_item_count) { Item.count }
 
     context 'with valid params' do
       before do
         post :create, bucketlist_id: bucketlist.id,
-             item: item_attr
+             name: item.name
       end
 
       it 'creates an item' do
@@ -20,8 +20,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       end
 
       it 'has json response containing new item' do
-        expect(json_response[:name]).to eq item_attr[:name]
-        expect(json_response[:done]).to eq item_attr[:done]
+        expect(json_response[:name]).to eq item.name
       end
 
       it 'has  success response status' do
@@ -84,7 +83,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     context 'with valid parameters' do
       before do
         patch :update, bucketlist_id: bucketlist.id,
-              id: item.id, item: { name: 'Build an api service' }
+              id: item.id, name: 'Build an api service'
       end
 
       it 'successfully updates the item' do
@@ -103,7 +102,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     context 'with invalid parameters' do
       before do
         patch :update, bucketlist_id: bucketlist.id,
-              id: item.id, item: { name: nil }
+              id: item.id, name: nil
       end
 
       it 'fails to update the item' do

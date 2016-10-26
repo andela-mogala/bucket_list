@@ -35,7 +35,7 @@ module Api
       private
 
       def bucketlist_params
-        params.require(:bucketlist).permit(:name, :id)
+        params.permit(:name)
       end
 
       def find_bucketlist

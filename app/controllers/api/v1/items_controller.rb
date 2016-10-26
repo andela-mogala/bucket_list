@@ -35,10 +35,7 @@ module Api
       private
 
       def item_params
-        params.require(:item).permit(:name,
-                                     :done,
-                                     :bucketlist_id,
-                                     :id)
+        params.permit(:name)
       end
 
       def find_item
