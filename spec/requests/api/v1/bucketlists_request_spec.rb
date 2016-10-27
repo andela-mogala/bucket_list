@@ -5,14 +5,13 @@ RSpec.describe 'Bucketlist requests', type: :request do
   let(:header) { { authorization: user.auth_token } }
 
   describe 'POST /bucketlists' do
-    let(:bucketlist){ build :bucketlist, user: user }
+    let(:bucketlist) { build :bucketlist, user: user }
     let!(:initial_bucketlist_count) { Bucketlist.count }
 
     context 'with valid params' do
-
       before do
         post '/bucketlists', { user_id: user.id,
-                             name:  bucketlist.name } , header
+                               name:  bucketlist.name }, header
       end
 
       it 'persists bucketlist to database' do
@@ -80,7 +79,8 @@ RSpec.describe 'Bucketlist requests', type: :request do
 
     context 'with valid params' do
       before do
-        patch "/bucketlists/#{bucketlist.id}", { name: 'Something Nice' }, header
+        patch "/bucketlists/#{bucketlist.id}",
+              { name: 'Something Nice' }, header
       end
 
       it 'updates the bucketlist' do

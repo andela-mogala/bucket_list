@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Bucketlist, type: :model do
-
   describe 'instance methods' do
     it { should respond_to :name }
     it { should respond_to :user }
@@ -29,8 +28,8 @@ RSpec.describe Bucketlist, type: :model do
 
     describe '.recently_added' do
       it 'returns a collection ordered by last created' do
-        expect(Bucketlist.recently_added).to match_array(
-                                              [bucketlist2, bucketlist1])
+        expect(Bucketlist.recently_added)
+          .to match_array([bucketlist2, bucketlist1])
       end
     end
 
@@ -41,10 +40,11 @@ RSpec.describe Bucketlist, type: :model do
         search_params = { q: 'build' }
         it 'should return collection ordered by creation time' do
           expect(Bucketlist.search(search_params)).to match_array(
-                                                        [
-                                                          bucketlist3,
-                                                          bucketlist1
-                                                        ])
+            [
+              bucketlist3,
+              bucketlist1
+            ]
+          )
         end
       end
     end
@@ -57,7 +57,8 @@ RSpec.describe Bucketlist, type: :model do
 
       it 'returns a strict bucketlist collection based on provided params' do
         expect(Bucketlist.paginate(page, limit)).to match_array(
-          [bucketlists.third, bucketlists.fourth])
+          [bucketlists.third, bucketlists.fourth]
+        )
       end
     end
   end

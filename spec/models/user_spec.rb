@@ -1,15 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
-    it { is_expected.to respond_to :first_name }
-    it { is_expected.to respond_to :last_name }
-    it { is_expected.to respond_to :email }
-    it { is_expected.to respond_to :password }
-    it { is_expected.to respond_to :password_confirmation }
-    it { is_expected.to respond_to :auth_token }
-    it { is_expected.to respond_to :generate_token_and_update }
-    it { is_expected.to respond_to :token_expired? }
+  it { is_expected.to respond_to :first_name }
+  it { is_expected.to respond_to :last_name }
+  it { is_expected.to respond_to :email }
+  it { is_expected.to respond_to :password }
+  it { is_expected.to respond_to :password_confirmation }
+  it { is_expected.to respond_to :auth_token }
+  it { is_expected.to respond_to :generate_token_and_update }
+  it { is_expected.to respond_to :token_expired? }
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :first_name }

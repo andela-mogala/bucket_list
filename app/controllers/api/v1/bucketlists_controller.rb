@@ -14,7 +14,7 @@ module Api
 
       def index
         render json: { bucketlists: current_user.bucketlists.search(params) },
-          status: 200
+               status: 200
       end
 
       def show

@@ -8,8 +8,8 @@ RSpec.describe 'Authenticable' do
   let(:authentication) { Auth.new }
   let(:user) { create :user }
   before do
-    allow_any_instance_of(Auth).to receive(:http_token).
-      and_return(user.auth_token)
+    allow_any_instance_of(Auth).to receive(:http_token)
+      .and_return(user.auth_token)
   end
 
   describe '#http_token' do

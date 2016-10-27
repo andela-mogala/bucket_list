@@ -12,7 +12,7 @@ RSpec.describe 'Items Endpoints', type: :request do
     context 'with valid params' do
       before do
         post "/bucketlists/#{bucketlist.id}/items", { name: item.name },
-                                                    header
+             header
       end
 
       it 'creates an item' do
@@ -31,7 +31,7 @@ RSpec.describe 'Items Endpoints', type: :request do
     context 'with invalid params' do
       before do
         post "/bucketlists/#{bucketlist.id}/items", { name: nil },
-                                                    header
+             header
       end
       it 'does not create an item' do
         expect(Item.count).to eq initial_item_count
@@ -87,7 +87,7 @@ RSpec.describe 'Items Endpoints', type: :request do
       end
 
       it 'successfully updates the item' do
-        expect(item.reload.name).to eq "Build an api service"
+        expect(item.reload.name).to eq 'Build an api service'
       end
 
       it 'returns a json response of the updated item' do

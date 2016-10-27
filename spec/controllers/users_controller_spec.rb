@@ -9,7 +9,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'GET #new' do
-    before{ get :new }
+    before { get :new }
     it 'should have a new instace of user' do
       expect(assigns(:user)).to be_a_new User
     end

@@ -5,9 +5,10 @@ RSpec.describe 'Authentication requests', type: :request do
   let!(:header) { { authorization: user.auth_token } }
 
   describe 'POST /auth/login' do
-
     context 'with valid params' do
-      before { post auth_login_path, email: user.email, password: user.password }
+      before do
+        post auth_login_path, email: user.email, password: user.password
+      end
 
       it 'returns a response containing an authentication token' do
         expect(json_response[:auth_token]).to be_present
