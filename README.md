@@ -8,6 +8,7 @@ Its really easy. Following the next few steps should get you up and running in n
 
 ###Step 1: Clone the repo
 Start by copying the ```https``` or ```ssh``` links for the repo then run
+
 for ssh
 ```
 git clone git@github.com:andela-mogala/bucket_list.git
