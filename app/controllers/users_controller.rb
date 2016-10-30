@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :find_user, except: [:create, :new]
 
   def show
+    redirect_to action: 'new' unless session[:id]
   end
 
   def new
@@ -12,6 +13,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     return render 'new' unless @user.save
+    session[:id] = @user.id
     redirect_to action: 'show'
   end
 
