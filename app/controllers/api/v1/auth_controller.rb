@@ -6,7 +6,7 @@ module Api
       before_action :find_user
 
       def login
-        return render json: { errors: ['Invalid email/password'] } unless
+        return render json: { errors: [invalid_credentials] } unless
           @user.authenticate(params[:password])
         @user.generate_token_and_update
         render json: { auth_token: @user.auth_token }
@@ -14,7 +14,7 @@ module Api
 
       def logout
         current_user.generate_token_and_update
-        render json: { message: 'You have been logged out' }
+        render json: { message: logged_out }
       end
 
       private

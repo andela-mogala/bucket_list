@@ -29,7 +29,7 @@ module Api
 
       def destroy
         @item.destroy
-        head 204
+        render json: { message: resource_destroyed }, status: 204
       end
 
       private

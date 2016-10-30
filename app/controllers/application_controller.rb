@@ -3,10 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
   include Authenticable
+  include MessageHelper
 
   def invalid_route
     render json: {
-      error: "the end point #{params[:url]} is not available"
+      error: unavailable_endpoint
     }, status: 400
   end
 end
