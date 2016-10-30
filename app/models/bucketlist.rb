@@ -8,8 +8,8 @@ class Bucketlist < ActiveRecord::Base
   }
   scope :recently_added, -> { order(:created_at) }
   scope :paginate, lambda { |page, limit = 20|
-    offset((page.to_i - 1) * limit.to_i)
-      .limit(limit.to_i)
+    offset((page.to_i.abs - 1) * limit.to_i.abs)
+      .limit(limit.to_i.abs)
   }
 
   def self.search(params = {})
