@@ -6,7 +6,7 @@ RSpec.describe UsersController, type: :controller do
     before { get :index }
     it { should render_template :index }
     it 'renders with slate layout' do
-      expect(response).to render_template(layout: 'slate')
+      expect(response).to render_template(layout: false)
     end
   end
 

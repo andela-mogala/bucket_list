@@ -18,6 +18,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'figaro'
 gem 'materialize-sass', '~> 0.97.7'
+gem 'rouge', '~> 1.10.1'
+gem 'redcarpet', '~> 3.3.2'
 
 group :development, :test do
   gem 'byebug'
