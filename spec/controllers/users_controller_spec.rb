@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe 'GET #show' do
     let(:user) { FactoryGirl.create :user }
-    before { get :show, id: user.id }
+    before do
+      session[:id] = user.id
+      get :show, id: user.id
+    end
 
     it { should render_template :show }
   end
