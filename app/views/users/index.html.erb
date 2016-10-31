@@ -1,0 +1,663 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;shell&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/Logo2.png" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='/signup'>Sign Up for a Developer Key</a></li>
+            <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content" style="overflow: hidden;">
+        <h1 id="introduction">Introduction</h1>
+
+<p>A Rails API that provides a bucket list service. Its really easy. Following the next few steps should get you up and running in no time.</p>
+
+<h1 id="sign-up">Sign up</h1>
+
+<p>Visit <a href="/signup">Sign up Page</a> to sign up and register your data as a user on the app. Once you have done this, you are now ready to make requests.</p>
+
+<h1 id="authentication">Authentication</h1>
+
+<p>Unlike conventional web apps, apis are authenticated differently. Logging in will return an authentication token which you would use to make further calls to the api. The token expires after 2 hours so you would have to log in again.</p>
+
+<blockquote>
+<p>To get your authentication token, you need to structure your request like this:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X POST -d <span class="nv">email</span><span class="o">=</span><span class="s1">'your@email.com'</span>&amp;password<span class="o">=</span><span class="s1">'password'</span>
+  http://mybucketapi.herokuapp.com/auth/login
+</code></pre>
+
+<blockquote>
+<p>You&rsquo;ll get a json response like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"auth_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashbdjfaskjfdl.ksldhfkjsadhbjahiudhiasf.suduskbajfbksjdbfksd"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>MyBucketApi uses this auth_token to allow access to the API.
+MyBucketApi expects for the auth_token to be included in all API requests to the server in a header that looks like the following:</p>
+
+<p><code class="prettyprint">Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjahsf.suduskbajfbksjdbfksd</code></p>
+
+<aside class="notice">
+You must replace <code>ashbdjfaskjfdl.ksldhfkjsadhbjahiudhiasf.suduskbajfbksjdbfksd</code> with your personal auth token.
+</aside>
+
+<h1 id="bucketlists">Bucketlists</h1>
+
+<h2 id="create-a-bucketlist">Create a Bucketlist</h2>
+<pre class="highlight shell"><code>curl -X POST
+<span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+  -d <span class="nv">name</span><span class="o">=</span>Become+World+Class
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"'Become World Class"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:17:43.046Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:17:43.046Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_by"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint create a new bucketlist and returns the same bucketlist.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST http://mybucketlistapi.herokuapp.com/bucketlists/name=some+name</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>nil</td>
+<td>The new name you want to give the bucketlist</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-all-bucketlists">Get All Bucketlists</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"bucketlists"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lightweight Linen Bench"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_by"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.682Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.682Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lightweight Granite Bench"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_by"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.722Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.722Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all Bucketlists.</p>
+<pre class="highlight shell"><code>curl <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists?page=2&amp;limit=2"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"bucketlists"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mediocre Paper Chair"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_by"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.729Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.729Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mediocre Cotton Car"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_by"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.733Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.733Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<pre class="highlight shell"><code>curl <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists?q=Paper"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command uses the value of the <code class="prettyprint">q</code> param to search the database and for a bucketlist with that name and returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"bucketlists"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mediocre Paper Chair"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.729Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.729Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fantastic Paper Lamp"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.779Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.779Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Durable Paper Table"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.806Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.806Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://mybucketlistapi.herokuapp.com/bucketlists</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>0</td>
+<td>Should be given a positive integer value.<br/>Works together with the limit parameter</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>20</td>
+<td>Should also be given a positive integer value</td>
+</tr>
+<tr>
+<td>q</td>
+<td>nil</td>
+<td>should be a string that would match<br/> a collection of bucketlists</td>
+</tr>
+</tbody></table>
+
+<aside class='notice'>
+A request like this <code>http://mybucketlistapi.herokuapp.com/bucketlists?page=2&limit=10</code> will return the 11th to 20th bucketlist elements.
+</aside>
+
+<h2 id="get-a-specific-bucketlist">Get a Specific Bucketlist</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/2"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lightweight Linen Bench"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.682Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.682Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_by"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MyString"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"date_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:27:27.810Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"date_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:27:27.810Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves a specific bucketlist.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://mybucketlistapi.herokuapp.com/bucketlists/&lt;ID&gt;</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the bucketlist to retrieve</td>
+</tr>
+</tbody></table>
+
+<h2 id="update-a-specific-bucketlist">Update a Specific Bucketlist</h2>
+<pre class="highlight shell"><code>curl -X PATCH <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/2"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+  -d <span class="nv">name</span><span class="o">=</span>Build+a+robot
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Build a robot"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:25:36.682Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:03:39.391Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_by"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MyString"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"date_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:27:27.810Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"date_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-23T12:27:27.810Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint updates a specific bucketlist and returns the updated bucketlist.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">PATCH http://mybucketlistapi.herokuapp.com/bucketlists/&lt;ID&gt;?name=some+name</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the bucketlist to update</td>
+</tr>
+<tr>
+<td>name</td>
+<td>The new name you want to give the bucketlist</td>
+</tr>
+</tbody></table>
+
+<h2 id="delete-a-specific-bucketlist">Delete a Specific Bucketlist</h2>
+<pre class="highlight shell"><code>curl -X DELETE <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/2"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Successfully deleted"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint deletes a specific bucketlist and returns a sucess message.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p>`DELETE http://mybucketlistapi.herokuapp.com/bucketlists/<ID></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the bucketlist to delete</td>
+</tr>
+</tbody></table>
+
+<h1 id="items">Items</h1>
+
+<h2 id="create-an-item">Create an Item</h2>
+<pre class="highlight shell"><code>curl -X POST
+<span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/&lt;bucketlist_id&gt;/items/&lt;id&gt;"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+  -d <span class="nv">name</span><span class="o">=</span>Build+a+Robot
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"'Build a Robot"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:30:10.105Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:30:10.105Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint creates a new item and returns the same item.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST http://mybucketlistapi.herokuapp.com/bucketlists/&lt;bucketlist_id&gt;/items/&lt;id&gt;?name=Build+a+Robot</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>nil</td>
+<td>The new name you want to give the bucketlist</td>
+</tr>
+<tr>
+<td>done</td>
+<td>false</td>
+<td>whether or not the task has been completed</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-all-items">Get All Items</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/&lt;bucketlist_id&gt;/items"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"'Build a Robot"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"bucketlist_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:30:10.105Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:30:10.105Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all Items.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://mybucketlistapi.herokuapp.com/bucketlists/23/items</code></p>
+
+<h2 id="get-a-specific-bucketlist">Get a Specific Bucketlist</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/23/items/4"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"'Build a Robot"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:30:10.105Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:30:10.105Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves a specific item.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://mybucketlistapi.herokuapp.com/bucketlists/&lt;ID&gt;/items/&lt;item_id&gt;</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the bucketlist that contains the item</td>
+</tr>
+<tr>
+<td>item_id</td>
+<td>The ID of the item to be retrieve</td>
+</tr>
+</tbody></table>
+
+<h2 id="update-a-specific-item">Update a Specific Item</h2>
+<pre class="highlight shell"><code>curl -X PATCH <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/2/items/4"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+  -d <span class="nv">name</span><span class="o">=</span>Buy+tools
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Buy tools"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:30:10.105Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"date_updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-10-28T16:44:24.529Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint updates a specific item in a bucketlist and returns the updated item.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">PATCH http://mybucketlistapi.herokuapp.com/bucketlists/&lt;ID&gt;/items/4?name=some+name</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the bucketlist that contains the item</td>
+</tr>
+<tr>
+<td>item_id</td>
+<td>The ID of the item to be retrieve</td>
+</tr>
+<tr>
+<td>name</td>
+<td>The new name you want to give the item</td>
+</tr>
+</tbody></table>
+
+<h2 id="delete-a-specific-item">Delete a Specific Item</h2>
+<pre class="highlight shell"><code>curl -X DELETE <span class="s2">"http://mybucketlistapi.herokuapp.com/bucketlists/23/items/4"</span>
+  -H <span class="s2">"Authorization: ashbdjfaskjfdl.ksldhfkjsadhbjaiasf.suduskbajfbksjdbfksd"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Successfully deleted"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint deletes a specific item and returns a success message.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p>`DELETE http://mybucketlistapi.herokuapp.com/bucketlists/<ID>/items/<item_id></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the bucketlist to delete</td>
+</tr>
+<tr>
+<td>item_id</td>
+<td>The ID of the item to be retrieve</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>

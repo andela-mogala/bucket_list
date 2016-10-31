@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - 2.3.1
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+script:
+  - bundle exec rspec spec/
+addons:
+  code_climate:
+    repo_token: d5d9bd6e3415e787fed15e0da5ddf253ddf27118e7134ccc384d90bef384f060
