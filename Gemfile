@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7.1'
-gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -22,6 +21,7 @@ gem 'rouge', '~> 1.10.1'
 gem 'redcarpet', '~> 3.3.2'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'byebug'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
   gem 'rspec-rails', '~> 3.5'
