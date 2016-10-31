@@ -2,6 +2,10 @@
 class UsersController < ApplicationController
   before_action :find_user, except: [:create, :new]
 
+  def index
+    render layout: false
+  end
+
   def show
     redirect_to action: 'new' unless session[:id]
   end

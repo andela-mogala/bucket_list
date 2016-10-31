@@ -1,7 +1,7 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
-
+  root 'users#index'
   resources :users, only: [:create, :show, :update, :destroy]
 
   scope controller: :users do
