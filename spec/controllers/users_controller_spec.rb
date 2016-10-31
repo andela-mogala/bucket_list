@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+
+  describe 'GET #index' do
+    before { get :index }
+    it { should render_template :index }
+  end
+
   describe 'GET #show' do
     let(:user) { FactoryGirl.create :user }
     before do
@@ -13,7 +19,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #new' do
     before { get :new }
-    it 'should have a new instace of user' do
+    it 'should have a new instance of user' do
       expect(assigns(:user)).to be_a_new User
     end
   end
