@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :find_user, except: [:create, :new]
 
   def index
-    render layout: false
+    render layout: 'slate'
   end
 
   def show
