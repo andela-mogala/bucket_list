@@ -6,6 +6,6 @@ class ApplicationController < ActionController::Base
   include MessageHelper
 
   def invalid_route
-    render json: { error: unavailable_endpoint }
+    render json: { error: unavailable_endpoint }, status: 404
   end
 end

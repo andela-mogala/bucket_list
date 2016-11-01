@@ -5,9 +5,8 @@ class ApiConstraints
   end
 
   def matches?(request)
-    @default ||
-    request
-      .headers['Accept']
-      .include?("version=#{@version}")
+    @default || request
+                  .headers['Accept']
+                  .include?("version=#{@version}")
   end
 end
