@@ -6,6 +6,7 @@ module Api
       before_action :find_user
 
       def login
+        return render json: { errors: 'No such user' } unless @user
         if @user.authenticate(params[:password])
           @user.generate_token_and_update
           render json: { auth_token: @user.auth_token }

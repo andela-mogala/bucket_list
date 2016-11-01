@@ -29,8 +29,12 @@ RSpec.describe 'Bucketlist requests', type: :request do
 
     context 'with invalid params' do
       before do
-        post '/bucketlists', { user_id: user.id,
-                               name: nil }, header
+        post '/bucketlists',
+              {
+               user_id: user.id,
+               name: nil
+              },
+              header
       end
 
       it 'does not persist to the databse' do
@@ -74,13 +78,13 @@ RSpec.describe 'Bucketlist requests', type: :request do
   end
 
   describe 'PUT/PATCH /bucketlists/:id' do
-    let(:user) { create :user }
     let(:bucketlist) { create :bucketlist, user: user }
 
     context 'with valid params' do
       before do
         patch "/bucketlists/#{bucketlist.id}",
-              { name: 'Something Nice' }, header
+              { name: 'Something Nice' },
+              header
       end
 
       it 'updates the bucketlist' do
@@ -117,7 +121,6 @@ RSpec.describe 'Bucketlist requests', type: :request do
   end
 
   describe 'DELETE /bucketlists/:id' do
-    let!(:user) { create :user }
     let!(:bucketlist) { create :bucketlist, user: user }
 
     before { delete "/bucketlists/#{bucketlist.id}", {}, header }

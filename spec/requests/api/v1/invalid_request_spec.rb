@@ -13,7 +13,7 @@ RSpec.describe 'Invalid routes', type: :request do
       end
 
       it 'returns status indicating resource is not found' do
-        expect(response.status).to eq 400
+        expect(response.status).to eq 404
       end
     end
   end

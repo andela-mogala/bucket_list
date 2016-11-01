@@ -15,9 +15,9 @@ class User < ActiveRecord::Base
   end
 
   def token_expired?(current_token)
-    result = token_params[:issued_at].to_datetime -
-             token_params[:expires_at].to_datetime
-    current_token == (auth_token && (result <= 0))
+    result = token_params[:expires_at].to_datetime -
+             token_params[:issued_at].to_datetime
+    (current_token != auth_token) && (result <= 0)
   end
 
   private
@@ -27,10 +27,10 @@ class User < ActiveRecord::Base
   end
 
   def generate_token
-    self.auth_token = JsonWebToken.encode(
-                                          user_id: id,
-                                          issued_at: Time.now,
-                                          expires_at: 2.hours.from_now
-                                          )
+    auth_token = JsonWebToken.encode(
+                                     user_id: id,
+                                     issued_at: Time.now,
+                                     expires_at: 2.hours.from_now
+                                    )
   end
 end

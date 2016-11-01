@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
-    it { should have_many :bucketlists }
+    it { is_expected.to have_many :bucketlists }
   end
 
   describe 'bucketlist dependence' do
@@ -37,24 +37,11 @@ RSpec.describe User, type: :model do
   end
 
   describe 'instance methods' do
-    describe '#generate_token_and_update' do
-      let(:user) { create :user }
+    let(:user) { create :user }
 
+    describe '#generate_token_and_update' do
       it 'has an auth_token' do
         expect(user.auth_token).to_not be_nil
-      end
-    end
-
-    describe '#token_expired?' do
-      let (:user) { create :user }
-      let!(:old_token) { user.auth_token }
-
-      context 'when auth tokens don\'t match' do
-        before { user.generate_token_and_update }
-
-        it 'returns true' do
-          expect(user.token_expired?(old_token)).to be true
-        end
       end
     end
   end

@@ -22,17 +22,6 @@ RSpec.describe 'Authentication requests', type: :request do
         expect(json_response[:errors]).to eq ['Invalid email/password']
       end
     end
-
-    context 'with invalid auth_token' do
-      before do
-        header['Authorization'] = 'sadhjbdasbjhabsjhba'
-        get auth_logout_path, {}, header
-      end
-
-      it 'returns \'Not Authorized' do
-        expect(json_response[:errors]).to eq ['Not Authorized']
-      end
-    end
   end
 
   describe 'GET /auth/logout' do
@@ -43,6 +32,17 @@ RSpec.describe 'Authentication requests', type: :request do
 
       it 'has a message indicating logout success' do
         expect(json_response[:message]).to eq 'You have been logged out'
+      end
+    end
+
+    context 'with invalid auth_token' do
+      before do
+        header['Authorization'] = 'sadhjbdasbjhabsjhba'
+        get auth_logout_path, {}, header
+      end
+
+      it 'returns \'Not Authorized\'' do
+        expect(json_response[:errors]).to eq ['Not Authorized']
       end
     end
   end

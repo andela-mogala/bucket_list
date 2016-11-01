@@ -11,7 +11,8 @@ RSpec.describe 'Items Endpoints', type: :request do
 
     context 'with valid params' do
       before do
-        post "/bucketlists/#{bucketlist.id}/items", { name: item.name },
+        post "/bucketlists/#{bucketlist.id}/items",
+             { name: item.name },
              header
       end
 
@@ -30,7 +31,8 @@ RSpec.describe 'Items Endpoints', type: :request do
 
     context 'with invalid params' do
       before do
-        post "/bucketlists/#{bucketlist.id}/items", { name: nil },
+        post "/bucketlists/#{bucketlist.id}/items",
+             { name: nil },
              header
       end
       it 'does not create an item' do
@@ -83,7 +85,8 @@ RSpec.describe 'Items Endpoints', type: :request do
     context 'with valid parameters' do
       before do
         patch "/bucketlists/#{bucketlist.id}/items/#{item.id}",
-              { name: 'Build an api service' }, header
+              { name: 'Build an api service' },
+              header
       end
 
       it 'successfully updates the item' do
@@ -102,7 +105,8 @@ RSpec.describe 'Items Endpoints', type: :request do
     context 'with invalid parameters' do
       before do
         patch "/bucketlists/#{bucketlist.id}/items/#{item.id}",
-              { name: nil }, header
+              { name: nil },
+              header
       end
 
       it 'fails to update the item' do

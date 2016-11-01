@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe Bucketlist, type: :model do
   describe 'instance methods' do
-    it { should respond_to :name }
-    it { should respond_to :user }
+    it { is_expected.to respond_to :name }
+    it { is_expected.to respond_to :user }
   end
 
   describe 'validations' do
-    it { should validate_presence_of :name }
-    it { should validate_length_of :name }
+    it { is_expected.to validate_presence_of :name }
+    it { is_expected.to validate_length_of :name }
   end
 
   describe 'associations' do
-    it { should belong_to :user }
-    it { should have_many :items }
+    it { is_expected.to belong_to :user }
+    it { is_expected.to have_many :items }
   end
 
   describe 'class methods' do
@@ -39,12 +39,8 @@ RSpec.describe Bucketlist, type: :model do
       context 'with names parameter' do
         search_params = { q: 'build' }
         it 'should return collection ordered by creation time' do
-          expect(Bucketlist.search(search_params)).to match_array(
-            [
-              bucketlist3,
-              bucketlist1
-            ]
-          )
+          expect(Bucketlist.search(search_params))
+            .to match_array([bucketlist3, bucketlist1])
         end
       end
     end
@@ -56,9 +52,8 @@ RSpec.describe Bucketlist, type: :model do
       let(:limit) { 2 }
 
       it 'returns a strict bucketlist collection based on provided params' do
-        expect(Bucketlist.paginate(page, limit)).to match_array(
-          [bucketlists.third, bucketlists.fourth]
-        )
+        expect(Bucketlist.paginate(page, limit))
+          .to match_array([bucketlists.third, bucketlists.fourth])
       end
     end
   end

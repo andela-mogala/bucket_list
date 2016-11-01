@@ -26,10 +26,10 @@ RSpec.describe 'Authenticable' do
     end
   end
 
-  describe '#authenticate_user!' do
+  describe '#authenticate_user' do
     context 'when auth_token is valid' do
       it 'sets the current_user' do
-        authentication.authenticate_user!
+        authentication.authenticate_user
         expect(authentication.current_user).to eq user
       end
     end

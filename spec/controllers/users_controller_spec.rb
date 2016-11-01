@@ -4,7 +4,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #index' do
     before { get :index }
-    it { should render_template :index }
+    it { is_expected.to render_template :index }
     it 'renders with slate layout' do
       expect(response).to render_template(layout: false)
     end
@@ -17,7 +17,7 @@ RSpec.describe UsersController, type: :controller do
       get :show, id: user.id
     end
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
   end
 
   describe 'GET #new' do
@@ -38,7 +38,7 @@ RSpec.describe UsersController, type: :controller do
         expect(User.count).to eq initial_user_count + 1
       end
 
-      it { should redirect_to show_path }
+      it { is_expected.to redirect_to show_path }
     end
 
     context 'with invalid parameters' do
@@ -51,7 +51,7 @@ RSpec.describe UsersController, type: :controller do
         expect(User.count).to eq initial_user_count
       end
 
-      it { should render_template :new }
+      it { is_expected.to render_template :new }
     end
   end
 end
