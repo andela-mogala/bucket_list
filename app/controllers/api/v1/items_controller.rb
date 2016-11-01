@@ -1,16 +1,18 @@
 module Api
   module V1
     class ItemsController < ApplicationController
-      before_action :authenticate_user!
+      before_action :authenticate_user
       before_action :find_bucketlist, only: [:create, :index]
       before_action :find_item, only: [:show, :update, :destroy]
       respond_to :json
 
       def create
         item = @bucketlist.items.build(item_params)
-        return render json: { errors: item.errors }, status: 422 unless
-          item.save
-        render json: item, status: 201
+        if item.save
+          render json: item, status: 201
+        else
+          render json: { errors: item.errors }, status: 422
+        end
       end
 
       def index
@@ -22,9 +24,11 @@ module Api
       end
 
       def update
-        return render json: { errors: @item.errors }, status: 422 unless
-          @item.update_attributes(item_params)
-        render json: @item, status: 200
+        if @item.update_attributes(item_params)
+          render json: @item, status: 200
+        else
+          return render json: { errors: @item.errors }, status: 422
+        end
       end
 
       def destroy
@@ -43,8 +47,9 @@ module Api
       end
 
       def find_bucketlist
-        @bucketlist = current_user.bucketlists
-                                  .find_by(id: params[:bucketlist_id])
+        @bucketlist = current_user
+                        .bucketlists
+                        .find_by(id: params[:bucketlist_id])
       end
     end
   end

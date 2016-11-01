@@ -3,19 +3,21 @@ class Bucketlist < ActiveRecord::Base
   has_many :items, dependent: :destroy
   validates :name, presence: true,
                    length: { minimum: 2 }
-  scope :filter_by_name, lambda { |keyword|
+  scope :filter_by_name, ->(keyword) do
     where('lower(name) LIKE ?', "%#{keyword.downcase}%")
-  }
+  end
   scope :recently_added, -> { order(:created_at) }
-  scope :paginate, lambda { |page, limit = 20|
+  scope :paginate, ->(page, limit = 20) do
     offset((page.to_i.abs - 1) * limit.to_i.abs)
       .limit(limit.to_i.abs)
-  }
+  end
 
   def self.search(params = {})
     bucketlists = Bucketlist.filter_by_name(params[:q]) if params[:q].present?
-    bucketlists = Bucketlist.paginate(params[:page], params[:limit]) if
-      params[:page].present? && params[:limit].present?
-    bucketlists || Bucketlist.all
+    if params[:page].present? && params[:limit].present?
+      bucketlists.paginate(params[:page], params[:limit])
+    else
+      bucketlists || Bucketlist.all
+    end
   end
 end

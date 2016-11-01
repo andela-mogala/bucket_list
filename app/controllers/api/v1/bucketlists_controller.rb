@@ -2,14 +2,16 @@ module Api
   module V1
     class BucketlistsController < ApplicationController
       respond_to :json
-      before_action :authenticate_user!
+      before_action :authenticate_user
       before_action :find_bucketlist, only: [:show, :update, :destroy]
 
       def create
         bucketlist = current_user.bucketlists.build(bucketlist_params)
-        return render json: { errors: bucketlist.errors }, status: 422 unless
-          bucketlist.save
-        render json: bucketlist, status: 201
+        if bucketlist.save
+          render json: bucketlist, status: 201
+        else
+          render json: { errors: bucketlist.errors }, status: 422
+        end
       end
 
       def index
@@ -22,9 +24,11 @@ module Api
       end
 
       def update
-        return render json: { errors: @bucketlist.errors }, status: 422 unless
-          @bucketlist.update_attributes(bucketlist_params)
-        render json: @bucketlist, status: 200
+        if @bucketlist.update_attributes(bucketlist_params)
+          render json: @bucketlist, status: 200
+        else
+          render json: { errors: @bucketlist.errors }, status: 422
+        end
       end
 
       def destroy
