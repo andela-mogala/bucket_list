@@ -6,6 +6,8 @@ A Rails API that provides a bucket list service
 ##GETTING STARTED
 Its really easy. Following the next few steps should get you up and running in no time.
 
+For full documentation endpoints, access, errors and examples on how to construct api calls see [Documentation Page](http://mybucketlist.herokuapp.com)
+
 ###Step 1: Clone the repo
 Start by copying the ```https``` or ```ssh``` links for the repo then run
 
@@ -34,12 +36,12 @@ The server is responsible for receving requests and serving you a response, so i
 To view the results of queries made to the api, you would need a tool like [cURL](https://curl.haxx.se/download.html) or [POSTMAN](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en)(POSTMAN is a chrome extension). You can snoop around internet for quick tutorials on how to use these tools. I will however show you an example of how to construct a request in cURL. But before then ...
 
 ###Step 4: Sign Up
-Typically, items belong to individual bucketlists and a bucketlist belongs to a user. This means that you can not create a bucketlist without signing up. So you need to visit [http://localhost:3000/signup](http://localhost:3000/signup) to sign up and register your data as a user on the app. Once you have done this, you are now ready to make requests.
+Typically, items belong to individual bucketlists and a bucketlist belongs to a user. This means that you can not create a bucketlist without signing up. So you need to visit [http://mybucketlistapi.herokuapp.com/signup](http://mybucketlistapi.herokuapp.com/signup) to sign up and register your data as a user on the app. Once you have done this, you are now ready to make requests.
 
 ###Step 5: Log In
 Unlike conventional web apps, apis are authenticated differently. Logging in will return an authentication token which you would use to make further calls to the api. The token expires after 2 hours so you would have to log in again.
 ```
-curl -X POST -d email='me@example.com'&password='somepassword' http://localhost:3000/auth/login
+curl -X POST -d email='me@example.com'&password='somepassword' http://mybucketlistapi.herokuapp.com/auth/login
 ```
 The command above will log you in provided your credentials are correct and it would return a JWT(JSON web token) that looks like this
 ```
@@ -54,7 +56,7 @@ This token can now be used to make further requests
 |GET /auth/logout | Logs out a user | false |
 |POST /bucketlists | Create a new bucketlist | false |
 |GET /bucketlists | Retrieve all bucketlists | false |
-|GET /bucketlists/:id | REtrieve a particular bucketlist | false |
+|GET /bucketlists/:id | Retrieve a particular bucketlist | false |
 |PUT /bucketlists/:id | Update a bucketlist | false |
 |DELETE /bucketlists/:id | Delete a bucketlist | false |
 |POST /bucketlists/:id/items | Create a new item in a bucketlist | false |
@@ -66,7 +68,7 @@ This token can now be used to make further requests
 ###Example
 So here's a nice example of how to create a bucketlist via cURL
 ```
-curl -X POST -H 'Authorization: Bearer ahdfsudjadnfiuabdskjfasdkjflas.jbsdafp_jhbadhjffb1jfbdv.jskhdgkfasjkdhflsadjfabskfh' -d name='Build a Drone' http://localhost:3000/bucketlists
+curl -X POST -H 'Authorization: Bearer ahdfsudjadnfiuabdskjfasdkjflas.jbsdafp_jhbadhjffb1jfbdv.jskhdgkfasjkdhflsadjfabskfh' -d name='Build a Drone' http://mybucketlistapi.herokuapp.com/bucketlists
 ```
 ###FYI
 Authentication is done by adding your auth token to the Authorization header.

@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
   <head>
@@ -6,9 +5,7 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>API Reference</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+
     <style>
       .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
@@ -88,11 +85,10 @@
 .highlight .ss {
   color: #90a959;
 }
-table {
-  width: 500px;
-}
     </style>
-
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
   </head>
 
   <body class="index" data-languages="[&quot;shell&quot;]">
@@ -157,7 +153,7 @@ MyBucketApi expects for the auth_token to be included in all API requests to the
 You must replace <code>ashbdjfaskjfdl.ksldhfkjsadhbjahiudhiasf.suduskbajfbksjdbfksd</code> with your personal auth token.
 </aside>
 
-<h1 id="available-end-points">AVAILABLE END POINTS</h1>
+<h1 id="available-end-points">Available End Points</h1>
 
 <table><thead>
 <tr>
@@ -188,7 +184,7 @@ You must replace <code>ashbdjfaskjfdl.ksldhfkjsadhbjahiudhiasf.suduskbajfbksjdbf
 </tr>
 <tr>
 <td style="text-align: left">GET /bucketlists/:id</td>
-<td style="text-align: left">REtrieve a particular bucketlist</td>
+<td style="text-align: left">Retrieve a particular bucketlist</td>
 <td style="text-align: center">false</td>
 </tr>
 <tr>
@@ -729,7 +725,7 @@ A request like this <code>http://mybucketlistapi.herokuapp.com/bucketlists?page=
 
 <aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
 
-<p>The Kittn API uses the following error codes:</p>
+<p>Bucketlist API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -739,47 +735,19 @@ A request like this <code>http://mybucketlistapi.herokuapp.com/bucketlists?page=
 </thead><tbody>
 <tr>
 <td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
+<td>Bad Request &ndash; Your request isn't properly structured</td>
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
+<td>Unauthorized &ndash; Your authentication key is wrong</td>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+<td>Forbidden &ndash; The bucketlist requested is not open for public access</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+<td>Not Found &ndash; The specified bucketlist could not be found</td>
 </tr>
 </tbody></table>
 
